@@ -1,0 +1,101 @@
+#include<stdio.h>
+#define N 5
+int front=-1,rear=-1,top=-1;
+int q[N],s[N];
+void push(int x)
+{
+ if(top==N-1)
+ {
+ printf("stack is full:");
+ }
+ else
+ {
+ top=top+1;
+ s[top]=x;
+ }
+}
+int pop()
+{
+ if(top==-1)
+ {
+ printf("stack is empty:");
+ }
+ else
+ {
+ return s[top--];
+ }
+}
+int enqueue(int x)
+{
+ if(rear==N-1)
+ {
+ printf("\nqueue is full\n");
+ }
+ if(rear==-1 && front==-1)
+ {
+ rear=0;
+ front=0;
+ q[rear]=x;
+ }
+ else
+ {
+ rear=rear+1;
+ q[rear]=x;
+ }
+}
+int dequeue()
+{
+ if((front>rear)||(front==-1 && rear==-1))
+ {
+ printf("\nqueue is empty\n");
+ }
+ else
+ {
+ return q[front++];
+ }
+}
+void display()
+{
+ int i;
+ printf("\ndisplayed elements:\n");
+ for(i=rear;i>=front;i--)
+ {
+ printf("%d\n",q[i]);
+ }
+} 
+void reverse()
+{
+ int a,b,i=0;
+ while(front<=rear)
+ {
+ a=dequeue();
+ push(a);
+ 
+ }
+ front=-1;
+ rear=-1;
+ while(top!=-1)
+ {
+ b=pop();
+ enqueue(b);
+ }
+ printf("reversed elements:\n");
+ while(front<=rear)
+ {
+ printf("%d\n",q[front]);
+ front++;
+ }
+ front=0;
+}
+void main()
+{
+ enqueue(1); 
+ enqueue(2);
+ dequeue();
+ enqueue(4);
+ dequeue();
+ enqueue(5);
+ enqueue(6);
+ reverse();
+ display();
+}

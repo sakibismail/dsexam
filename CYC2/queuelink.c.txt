@@ -1,0 +1,99 @@
+ #include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+ struct node *next;
+};
+struct node *head=0,*temp,*front=0,*rear=0,*newnode;
+int encount=0;
+int max=5;
+void Enqueue()
+{
+ if(encount==max)
+ {
+ printf("\nqueue is full \n");
+ }
+ else if(rear==0 && front==0)
+ {
+ newnode=(struct node *)malloc(sizeof(struct node));
+ newnode->next=0;
+ rear=newnode;
+ front=newnode;
+ printf("\nEnter the data:");
+ scanf("%d",&rear->data);
+ rear->next=0;
+ front->next=0;
+ }
+ else
+ {
+ newnode=(struct node *)malloc(sizeof(struct node));
+ rear->next=newnode;
+ rear=newnode;
+ printf("\nEnter the data:");
+ scanf("%d",&rear->data);
+ }
+ encount++;
+}
+void Dequeue()
+{
+ temp=front;
+ if(rear==0 && front==0)
+ {
+ printf("\nQueue is empty\n");
+ }
+ if(encount<=1)
+ {
+ printf("\n queue is empty\n");
+ front==0;
+ rear=0;
+ head=0;
+ }
+ else
+ {
+ printf("\nDequeued element=%d\n",front->data);
+ front=front->next;
+ free(temp);
+ head=front;
+ if(encount!=1)
+ {
+ encount--;
+ }
+ else
+ {
+ encount=0;
+ }
+ 
+ }
+}
+void Display()
+{
+ temp=front;
+ printf("\n Details:\n");
+ while(temp!=rear)
+ {
+ printf("Data=%d\n",temp->data);
+ temp=temp->next;
+ }
+ printf("Data=%d\n",temp->data);
+}
+void main()
+{
+ int choice=1;
+ while(choice>=1 && choice<=3)
+ {
+ int key;
+ printf("Enter the choice:");
+ scanf("%d",&choice);
+ switch(choice)
+ {
+ case 1: Enqueue();
+ break;
+ case 2: Dequeue();
+ break;
+ case 3: Display();
+ break;
+ default: break;
+ }
+ }
+}

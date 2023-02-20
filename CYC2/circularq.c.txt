@@ -1,0 +1,85 @@
+#include<stdio.h>
+#define N 5
+int front=-1;
+int rear=-1;
+int item;
+int cq[N];
+void enqueue()
+{
+ if(front==-1 && rear==-1)
+ {
+ front=0;
+ rear=0;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ cq[rear]=item;
+ }
+ else if(((rear+1)%N==front))
+ {
+ printf("\nqueue is full\n");
+ }
+ else
+ {
+ rear=(rear+1)%N;
+ printf("enter the item:");
+ scanf("%d",&item);
+ cq[rear]=item; 
+ }
+}
+void dequeue()
+{
+ if(front==-1 && rear==-1)
+ {
+ printf("\ncircular queue is empty\n");
+ }
+ else if(front==rear)
+ {
+ printf("%d\n",cq[front]);
+ front=-1;
+ rear=-1;
+ }
+ else
+ {
+ printf("%d\n",cq[front]);
+ front=(front+1)%N;
+ }
+}
+void display()
+{
+ int i=front;
+ if(front==-1 && rear==-1)
+ {
+ printf("\ncircular queue is empty\n");
+ }
+ while(i!=rear)
+ {
+ printf("%d\n",cq[i]);
+ i=(i+1)%N;
+ }
+ printf("%d\n",cq[rear]);
+}
+int main()
+{
+ int choice;
+ while(1)
+ {
+ printf("\nCIRCULAR QUEUE\n");
+ printf("1:ENQUEUE\n");
+ printf("2:DEQUEUE\n");
+ printf("3:DISPLAY\n");
+ printf("enter the choice:");
+ scanf("%d",&choice);
+ switch(choice)
+ {
+ case 1: enqueue();
+ break;
+ case 2: dequeue();
+ break;
+ case 3: display();
+ break;
+ default: goto label;
+ }
+ }
+label:
+return 0;
+}

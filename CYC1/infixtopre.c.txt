@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<string.h>
+char s[50];
+char a[50];
+int top=-1;
+int precedence(char e)
+{
+ switch(e)
+ {
+ case '+':
+ case '-':
+ return 1;
+ case '*':
+ case '/': 
+ return 2;
+ case '^':
+ return 3;
+ }
+}
+void infixtopostfix(char a[])
+{
+ int i=0,j=0;
+ char x,y;
+ printf("\nPre fix expression:\n");
+ while(a[i]!='\0')
+ {
+ if(a[i]>='a' && a[i]<='z')
+ {
+ printf("%c",a[i]);
+ }
+ else if(a[i]=='(')
+ {
+ s[++top]=a[i];
+ }
+ else if(a[i]==')')
+ {
+ while(s[top]!='(')
+ {
+ printf("%c",s[top]);
+ top=top-1;
+ }
+ top=top-1;
+ }
+ else
+ {
+ x=a[i];
+ y=s[top];
+ if(top==-1 || y=='(' || precedence(y)<precedence(x))
+ {
+ s[++top]=a[i];
+ }
+ else
+ {
+ while(y!='(' && top!=-1 && precedence(x)<=precedence(y))
+ {
+ printf("%c",s[top]);
+ top=top-1;
+ y=s[++top];
+ }
+ s[++top]=x;
+ }
+ }
+ i++;
+ }
+ while(top!=-1)
+ {
+ printf("%c",s[top]);
+ top=top-1;
+ }
+}
+void main()
+{
+ printf("Enter the expression:");
+ scanf("%s",a);
+ strrev(a);
+ printf("The reversed array:%s",a);
+ infixtopostfix(a);
+}

@@ -1,0 +1,41 @@
+ #include<stdio.h>
+void main()
+{
+ int a[10],n,i,j,pos;
+ int temp;
+ int count1=0,count2=0;
+ printf("enter the limit:");
+ scanf("%d",&n);
+ printf("read array elements:\n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%d",&a[i]);
+ }
+ printf("print array elements:\n");
+ for(i=0;i<n;i++)
+ {
+ printf("%d\t",a[i]);
+ }
+ for(i=0;i<n;i++)
+ {
+ pos=i;
+ for(j=i+1;j<n;j++)
+ {
+ count1++;
+ if(a[pos]>a[j])
+ {
+ temp=a[j];
+ a[j]=a[pos];
+ a[pos]=temp;
+ count2++;
+ }
+ }
+ }
+ printf("\nsorted array:\n");
+ for(i=0;i<n;i++)
+ {
+ printf("%d\t",a[i]);
+ }
+ printf("\nNumber of comaprison=%d\n",count1);
+ printf("Number of swapping=%d\n",count2);
+}

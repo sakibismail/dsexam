@@ -1,0 +1,153 @@
+#include<stdio.h>
+#define N 5
+int front=-1;
+int rear=-1;
+int deq[N];
+int item;
+void EnqueueFront()
+{
+ if(front==(rear+1) || (front==0 && rear==N-1))
+ {
+ printf("\nQueue is full\n");
+ }
+ else if(front==-1 && rear==-1)
+ {
+ front=0;
+ rear=0;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ deq[front]=item;
+ }
+ else if(front==0)
+ {
+ front==N-1;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ deq[front]=item;
+ }
+ else
+ {
+ front=front-1;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ deq[front]=item;
+ }
+}
+void EnqueueRear()
+{
+ if(front==(rear+1) || (front==0 && rear==N-1))
+ {
+ printf("\nqueue is full\n");
+ }
+ else if(rear==N-1)
+ {
+ rear==0;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ deq[rear]=item;
+ }
+ else if(rear==-1 && front==-1)
+ {
+ rear=0;
+ front=0;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item);
+ deq[rear]=item;
+ }
+ else
+ {
+ rear=rear+1;
+ printf("\nEnter the item:\n");
+ scanf("%d",&item); 
+ deq[rear]=item;
+ }
+}
+void DequeueFront()
+{
+ if(rear==-1 && front==-1)
+ {
+ printf("\nqueue is empty:\n");
+ }
+ else if(front==rear)
+ {
+ printf("%d\n",deq[front]);
+ front=-1;
+ rear=-1;
+ }
+ else if(front==N-1)
+ {
+ printf("%d\n",deq[front]);
+ front=0;
+ }
+ else
+ {
+ printf("%d\n",deq[front]);
+ front=front+1;
+ }
+}
+void DequeueRear()
+{
+ if(rear==-1 && front==-1)
+ {
+ printf("\nqueue is empty:\n");
+ }
+ else if(rear==front)
+ {
+ printf("%d\n",deq[rear]);
+ front=-1;
+ rear=-1;
+ }
+ else if(rear==0)
+ {
+ printf("%d",deq[rear]);
+ rear=N-1;
+ }
+ else
+ {
+ printf("%d\n",deq[rear]);
+ rear=rear-1;
+ }
+}
+void Display()
+{
+ int i;
+ i=front;
+ printf("\nDeque contains:\n");
+ while(i!=rear)
+ {
+ printf("%d\n",deq[i]);
+ i=(i+1)%N;
+ }
+ printf("%d\n",deq[rear]);
+}
+int main()
+{
+ int choice;
+ while(1)
+ {
+ printf("\nOPERATIONS\n");
+ printf("1:ENQUEUE FRONT\n");
+ printf("2:ENQUEUE REAR\n");
+ printf("3:DEQUEUE FRONT\n");
+ printf("4:DEQUEUE REAR\n");
+ printf("5:DISPLAY\n");
+ printf("\nEnter the choice:\n");
+ scanf("%d",&choice);
+ switch(choice)
+ {
+ case 1: EnqueueFront();
+ break;
+ case 2: EnqueueRear();
+ break;
+ case 3: DequeueFront();
+ break;
+ case 4: DequeueRear();
+ break;
+ case 5: Display();
+ break;
+ default : goto label;
+ }
+ }
+ label:
+ return 0;
+}

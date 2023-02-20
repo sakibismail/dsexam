@@ -1,0 +1,142 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{ 
+ int coeff;
+ int pow;
+ struct node *next;
+};
+struct node *p1=0,*temp1,*p2=0,*temp2,*newnode;
+struct node *CreatePoly(struct node *t)
+{
+ struct node *tem,*newnode;
+ int choice;
+ int coeff;
+ int pow;
+ printf("Enter the choice(1/0)");
+ scanf("%d",&choice);
+ while(choice==1)
+ {
+ newnode = (struct node *) malloc (sizeof(struct node));
+ newnode->next=0;
+ printf("Enter the power:");
+ scanf("%d",&pow);
+ newnode->pow=pow;
+ printf("Enter the coefficient:");
+ scanf("%d",&coeff);
+ newnode->coeff=coeff;
+ if(t==0)
+ {
+ t=newnode;
+ tem=newnode; 
+ }
+ else
+ {
+ tem->next=newnode;
+ tem=newnode;
+ }
+ printf("Do you want to continue:");
+ scanf("%d",&choice);
+ }
+ return t;
+}
+struct node *Add(struct node *p,struct node *q)
+{
+ struct node *p3=0,*temp3,*newnode3;
+ while(p->next!=0 && q->next!=0)
+ {
+ if(p->pow==q->pow)
+ {
+ newnode3 = (struct node *)malloc(sizeof(struct node));
+ newnode3->pow=p->pow;
+ newnode3->coeff=p->coeff+q->coeff;
+ newnode3->next=0;
+ p=p->next;
+ q=q->next;
+ }
+ else if((p->pow)>(q->pow))
+ {
+ newnode3 = (struct node *)malloc(sizeof(struct node));
+ newnode3->next=newnode3;
+ newnode3->pow=p->pow;
+ newnode3->coeff=p->coeff;
+ p=p->next;
+ }
+ else if((p->pow)<(q->pow))
+ {
+ newnode3 = (struct node *)malloc(sizeof(struct node));
+ newnode3->pow=q->pow;
+ newnode3->coeff=q->coeff;
+ q=q->next;
+ }
+ if(p3==0)
+ {
+ p3=newnode3;
+ temp3=newnode3;
+ }
+ else
+ {
+ temp3->next=newnode3;
+ temp3=newnode3;
+ }
+ }
+ while(p!=0)
+ {
+ newnode3 = (struct node *)malloc(sizeof(struct node));
+ newnode3->next=0;
+ newnode3->pow=p->pow;
+ newnode3->coeff=p->coeff;
+ if(p3==0)
+ {
+ p3=newnode3;
+ temp3=newnode3;
+ }
+ else
+ {
+ temp3->next=newnode3;
+ temp3=newnode3;
+ }
+ p=p->next; 
+ }
+ while(q!=0)
+ {
+ newnode3 = (struct node *)malloc(sizeof(struct node));
+ newnode3->next=0;
+ newnode3->pow=q->pow;
+ newnode3->coeff=q->coeff;
+ if(p3==0)
+ {
+ p3=newnode3;
+ temp3=newnode3;
+ }
+ else
+ {
+ temp3->next=newnode3;
+ temp3=newnode3;
+ }
+ q=q->next; 
+ }
+ return p3; 
+}
+void Display(struct node *p)
+{
+ struct node *tem=p;
+ printf("\n");
+ while(tem->next!=0)
+ {
+ printf("%d(x)^%d+",tem->coeff,tem->pow);
+ tem=tem->next;
+ }
+ printf("%d(x)^%d",tem->coeff,tem->pow);
+}
+void main()
+{
+ struct node *p,*q,*r;
+ struct node *s=0,*t=0;
+ p=CreatePoly(s);
+ q=CreatePoly(t);
+ Display(p);
+ Display(q);
+ r=Add(p,q);
+ Display(r);
+}

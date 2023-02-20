@@ -1,0 +1,250 @@
+ #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node
+{
+ char name[50];
+ int number;
+ float totalm;
+ struct node *next;
+};
+struct node *head,*temp,*newnode;
+void CreateList()
+{
+ int choice;
+ printf("\nDo you want to create linked list (1/0):\n");
+ scanf("%d",&choice);
+ head=0;
+ temp=head;
+ while(choice==1)
+ {
+ newnode = (struct node *) malloc(sizeof(struct node));
+ printf("\nEnter the name:\n");
+ scanf("%s",newnode->name);
+ printf("\nEnter the roll number:\n");
+ scanf("%d",&newnode->number);
+ printf("\nEnter the total marks:\n");
+ scanf("%f",&newnode->totalm);
+ newnode->next=0;
+ if(head==0)
+ {
+ head=newnode;
+ temp=head;
+ }
+ else
+ {
+ temp->next=newnode;
+ temp=newnode;
+ }
+ printf("\nDo you want to continue (1/0):\n");
+ scanf("%d",&choice);
+ }
+}
+void InsertFront()
+{
+ temp=head;
+ newnode = (struct node *) malloc(sizeof(struct node));
+ printf("\nenter the data at front:\n");
+ printf("\nEnter the name:");
+ scanf("%s",newnode->name);
+ printf("\nEnter the number:");
+ scanf("%d",&newnode->number);
+ printf("\nEnter the total marks:");
+ scanf("%f",&newnode->totalm);
+ newnode->next=head;
+ head=newnode;
+ printf("\nAfter inserting at front:\n");
+}
+void InsertEnd()
+{
+ temp=head;
+ while(temp->next!=0)
+ {
+ temp=temp->next;
+ }
+ newnode = (struct node *) malloc(sizeof(struct node));
+ printf("\nenter the data at end:\n");
+ printf("\nEnter the name:");
+ scanf("%s",newnode->name);
+ printf("\nEnter the number:");
+ scanf("%d",&newnode->number);
+ printf("\nEnter the total marks:");
+ scanf("%f",&newnode->totalm);
+ newnode->next=0;
+ temp->next=newnode;
+ printf("After inserting in End:\n");
+}
+void InsertAny()
+{
+ int pos;
+ int i=1;
+ printf("\nEnter the position after you want to insert:\n");
+ scanf("%d",&pos);
+ temp=head;
+ while(i<pos)
+ {
+ temp=temp->next;
+ i++;
+ }
+ newnode = (struct node *) malloc(sizeof(struct node));
+ printf("\nenter the data at position:\n");
+ printf("\nEnter the name:");
+ scanf("%s",newnode->name);
+ printf("\nEnter the number:");
+ scanf("%d",&newnode->number);
+ printf("\nEnter the total marks:");
+ scanf("%f",&newnode->totalm);
+ newnode->next=temp->next;
+ temp->next=newnode; 
+ printf("After inserting in %dth position:\n",pos);
+}
+void DeleteFront()
+{
+ temp=head;
+ printf("\nDeleting from front:\n");
+ head=head->next;
+ free(temp);
+ printf("After deletion:\n");
+}
+void DeleteEnd()
+{
+ struct node *prevnode; 
+ temp=head;
+ printf("\n Deleting from end:\n");
+ while(temp->next!=0)
+ {
+ prevnode=temp;
+ temp=temp->next;
+ }
+ prevnode->next=0;
+ free(temp);
+ printf("After deleting:\n");
+}
+void DeleteAny()
+{
+ struct node *nextnode;
+ temp=head;
+ nextnode=head->next;
+ int pos;
+ int i=1;
+ printf("\nEnter the position after you want to delete:\n");
+ scanf("%d",&pos);
+ printf("Deleting from %dth position:",pos);
+ while(i<pos)
+ {
+ temp=temp->next;
+ nextnode=temp->next;
+ i++;
+ }
+ temp->next=nextnode->next;
+ free(nextnode);
+ printf("After deletion:\n");
+}
+void Display()
+{
+ struct node *temp;
+ temp=head;
+ printf("\n Details:\n");
+ while(temp!=0)
+ {
+ printf("name=%s\n",temp->name);
+ printf("number=%d\n",temp->number);
+ printf("total marks=%f\n",temp->totalm);
+ printf(".............\n");
+ temp=temp->next;
+ }
+}
+void Search()
+{
+ temp=head;
+ int rno;
+ printf("\nEnter the roll number you want to search:");
+ scanf("%d",&rno);
+ while(temp->next!=0)
+ {
+ temp=temp->next;
+ if(temp->number==rno)
+ {
+ printf("\nSearch found:\n");
+ printf("name=%s\n",temp->name);
+ printf("number=%d\n",temp->number);
+ printf("taotal marks=%f",temp->totalm);
+ 
+ }
+ }
+}
+void SortNum()
+{
+ struct node *ptr;
+ struct node *cpt;
+ int t,p;
+ char t2[20];
+ ptr=head;
+ cpt=head;
+ printf("\nSorting in progress:\n");
+ while(ptr->next!=0)
+ {
+ cpt=ptr->next;
+ while(cpt!=0)
+ {
+ if((ptr->number)>(cpt->number))
+ {
+ t=ptr->number;
+ ptr->number=cpt->number;
+ cpt->number=t;
+ p=ptr->totalm;
+ ptr->totalm=cpt->totalm;
+ cpt->totalm=p;
+ strcpy(t2,ptr->name);
+ strcpy(ptr->name,cpt->name);
+ strcpy(cpt->name,t2);
+ }
+ cpt=cpt->next;
+ }
+ ptr=ptr->next;
+ }
+ printf("\nAfter sorting:\n");
+temp=head;
+ while(temp!=0)
+ {
+ printf("name=%s\n",temp->name);
+ printf("number=%d\n",temp->number);
+ printf("taotal marks=%f\n",temp->totalm);
+ printf("................\n");
+ temp=temp->next;
+ }
+}
+int main()
+{
+ CreateList();
+ int choice;
+ while(1)
+ {
+ printf("Enter the choice:");
+ scanf("%d",&choice);
+ switch(choice)
+ {
+ case 1:InsertFront();
+ break;
+ case 2:InsertEnd();
+ break; 
+ case 3:InsertAny();
+ break;
+ case 4:DeleteFront();
+ break; 
+ case 5:DeleteEnd();
+ break; 
+ case 6:InsertAny();
+ break; 
+ case 7:Display();
+ break;
+ case 8:Search();
+ break; 
+ case 9:SortNum();
+ break; 
+ default: goto label; 
+ }
+ }
+ label:
+ return 0;
+}

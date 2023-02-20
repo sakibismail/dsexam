@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+ char str;
+ struct node *next;
+ struct node *pre;
+};
+struct node *head,*tail,*temp,*newnode;
+int count=0;
+void CreateDouble()
+{
+ int i=0;
+ head=0;
+ tail=0;
+ char exp[20];
+ printf("Enter the string:");
+ scanf("%s",exp);
+ temp=head;
+ while(exp[i]!='\0')
+ {
+ newnode = (struct node *) malloc (sizeof(struct node));
+ newnode->str=exp[i];
+ newnode->next=0;
+ newnode->pre=0;
+ if(head==0)
+ {
+ tail=newnode;
+ head=newnode;
+ temp=head;
+ }
+ else
+ {
+ temp->next=newnode;
+ newnode->pre=temp;
+ temp=temp->next;
+ }
+ i++;
+ count++;
+ }
+ tail=temp;
+}
+void Display()
+{
+ temp=head;
+ printf("\n String in double linked list:\n");
+ while(temp!=0)
+ {
+ printf("%c",temp->str);
+ temp=temp->next;
+ } 
+ printf("\n");
+}
+void Palliandrome()
+{
+ int l=count/2;
+ int i=0;
+ int flag=0;
+ temp=head;
+ while(i<l)
+ {
+ if(temp->str != tail->str)
+ {
+ flag++;
+ } 
+ temp=temp->next;
+ tail=tail->pre;
+ i++;
+ }
+ if(flag==0)
+ {
+ printf("the string is palliandrome:");
+ }
+ else
+ {
+ printf("the string is not palliandrome:");
+ }
+}
+void main()
+{
+ CreateDouble(); 
+ Display();
+ Palliandrome();
+}

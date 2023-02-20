@@ -1,0 +1,142 @@
+ #include<stdio.h>
+int k;
+int s1[10][3],s2[10][3];
+void ReadM(int r,int c,int x[][c])
+{
+ int i,j;
+ printf("\nenter the matrix:\n");
+ for(i=0;i<r;i++)
+ {
+ for(j=0;j<c;j++)
+ {
+ scanf("%d",&x[i][j]);
+ }
+ printf("\n");
+ }
+ 
+}
+void PrintM(int r,int c,int x[][c])
+{
+ int i,j;
+ printf("the matrix is:\n");
+ for(i=0;i<r;i++)
+ {
+ for(j=0;j<c;j++)
+ {
+ printf("%d\t",x[i][j]);
+ }
+ printf("\n");
+ }
+}
+void Sparse(int r,int c,int x[][c],int s[][3])
+{
+ int i,j;
+ k=1;
+ printf("sparse matrix:\n");
+ for(i=0;i<r;i++)
+ {
+ for(j=0;j<c;j++)
+ {
+ if(x[i][j]!=0)
+ {
+ s[k][0]=i;
+ s[k][1]=j;
+ s[k][2]=x[i][j];
+ printf("%d %d %d\n",s[k][0],s[k][1],s[k][2]);
+ k++;
+ }
+ }
+ }
+}
+void TSparse(int c,int s[][3],int total)
+{
+ int i,j;
+ k=1;
+ int t[10][10];
+ printf("transpose of sparse matrix:\n");
+ for(i=0;i<c;i++)
+ {
+ for(j=0;j<=total;j++)
+ {
+ if(s[j][1]==i)
+ {
+ t[k][0]=s[j][1];
+ t[k][1]=s[j][0];
+ t[k][2]=s[j][2];
+ printf("%d %d %d\n",t[k][0],t[k][1],t[k][2]);
+ k++;
+ }
+ }
+ }
+}
+void AddSparse(int s1[][3],int s2[][3],int total1,int total2)
+{ 
+ int r1,r2;
+ int sum[10][3];
+ r1=total1;
+ r2=total2;
+ int i,j;
+ int m=1,n=1;
+ k=1;
+ printf("Addition of sparse matrix:\n");
+ for(i=0;i<r1;i++)
+ {
+ for(j=0;j<r2;j++)
+ {
+ while((s1[m][0]==i && s1[m][1]==j) && (s2[n][0]==i && s2[n][1]==j))
+ {
+ sum[k][0]=s1[m][0];
+ sum[k][1]=s1[m][1];
+ sum[k][2]=s1[m][2]+s2[n][2];
+ printf("%d %d %d\n",sum[k][0],sum[k][1],sum[k][2]); 
+ m++;
+ n++;
+ k++;
+ }
+ while(s1[m][0]==i && s1[m][1]==j)
+ {
+ sum[k][0]=s1[m][0];
+ sum[k][1]=s1[m][1];
+ sum[k][2]=s1[m][2];
+ printf("%d %d %d\n",sum[k][0],sum[k][1],sum[k][2]);
+ m++;
+ k++; 
+ }
+ while(s2[n][0]==i && s2[n][1]==j)
+ {
+ sum[k][0]=s2[n][0];
+ sum[k][1]=s2[n][1];
+ sum[k][2]=s2[n][2];
+ printf("%d %d %d\n",sum[k][0],sum[k][1],sum[k][2]);
+ n++;
+ k++;
+ }
+ }
+ } 
+} 
+void main()
+{
+ int a[10][10],b[10][10],r1,c1,r2,c2;
+ int total1,total2;
+ printf("row1=");
+ scanf("%d",&r1);
+ printf("coloumn1=");
+ scanf("%d",&c1);
+ printf("row2=");
+ scanf("%d",&r2);
+ printf("coloumn2=");
+ scanf("%d",&c2);
+ ReadM(r1,c1,a);
+ ReadM(r2,c2,b);
+ PrintM(r1,c1,a);
+ PrintM(r2,c2,b);
+ Sparse(r1,c1,a,s1);
+ total1=k-1;
+ Sparse(r2,c2,b,s2);
+ total2=k-1;
+ printf("total1=%d\n",total1);
+ printf("total2=%d\n",total2);
+ TSparse(c1,s1,total1);
+ TSparse(c2,s2,total2);
+ AddSparse(s1,s2,total1,total2);
+}

@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<stdlib.h>
+char s[20];
+char a[20];
+int top=-1;
+int precedence(char e)
+{
+ switch(e)
+ {
+ case '+':
+ case '-':
+ return 1;
+ case '*':
+ case '/': 
+ return 2;
+ case '^':
+ return 3;
+ }
+}
+void infixtopostfix()
+{
+ int i=0,j=0;
+ char x,y;
+ while(a[i]!='\0')
+ {
+ if(a[i]>='a' && a[i]<='z')
+ {
+ printf("%c",a[i]);
+ }
+ else if(a[i]=='(')
+ {
+ s[++top]=a[i];
+ }
+ else if(a[i]==')')
+ {
+ while(s[top]!='(')
+ {
+ printf("%c",s[top]);
+ top=top-1;
+ }
+ top=top-1;
+ }
+ else
+ {
+ x=a[i];
+ y=s[top];
+ if(top==-1 || y=='(' || precedence(y)<precedence(x))
+ {
+ s[++top]=a[i];
+ }
+ else
+ {
+ while(y!='(' && top!=-1 && precedence(x)<=precedence(y))
+ {
+ printf("%c",s[top]);
+ top=top-1;
+ y=s[++top];
+ }
+ s[++top]=x;
+ }
+ }
+ i++;
+ }
+ while(top!=-1)
+ {
+ printf("%c",s[top--]);
+ }
+}
+void main()
+{
+ printf("Enter the expression:");
+ scanf("%s",&a);
+ infixtopostfix();
+}
+#include<stdio.h>
+void main()
+{
+ int a[100],n,i,search,count=0,comp=0;
+ printf("enter the number of elements:");
+ scanf("%d",&n);
+ printf("enter the array elements:\n");
+ for(i=0;i<n;i++)
+ {
+ scanf("%d",&a[i]);
+ }
+ printf("the array elements are:\n");
+ for(i=0;i<n;i++)
+ {
+ printf("%d\t",a[i]);
+ }
+ printf("enter the search elements:");
+ scanf("%d",&search);
+ for(i=0;i<n;i++)
+ {
+ comp++;
+ if(a[i]==search)
+ {
+ count++;
+ goto label;
+ }
+ }
+ label:
+ if(count!=0)
+ {
+ printf("%d found %d times\n",search,count);
+ printf("number of comparison=%d\n",comp);
+ }
+ else
+ {
+ printf("%d not found\n",search);
+ printf("number of comparison=%d\n",n); 
+ } 
+}

@@ -1,0 +1,82 @@
+#include<stdio.h>
+void Assign0(int a[])
+{
+ int i;
+ for(i=0;i<10;i++)
+ {
+ a[i]=0;
+ }
+}
+int ReadP(int a[],int deg)
+{
+ int i,coeff;
+ while(1)
+ {
+ printf("enter the power(starting from 0 upto degree):");
+ scanf("%d",&coeff);
+ if(coeff<=deg)
+ {
+ printf("enter the term of polynomial:");
+ scanf("%d",&a[coeff]);
+ }
+ else
+ {
+ goto label1;
+ }
+ }
+ label1:
+ printf("\nexit\n");
+ return 0;
+}
+void PrintP(int a[],int deg)
+{
+ int i;
+ printf("\nthe polynomial is\n:");
+ for(i=0;i<=deg-1;i++)
+ {
+ if(a[i]!=0)
+ {
+ printf("%d(x^%d)+",a[i],i);
+ }
+ }
+ printf("%d(x^%d)",a[deg],i);
+}
+void AddP(int a[],int b[],int c[],int deg)
+{
+ int i;
+ printf("\nthe sum of polynomial is:\n");
+ for(i=0;i<deg;i++)
+ {
+ c[i]=a[i]+b[i];
+ if(c[i]!=0)
+ {
+ printf("%d(x^%d)+",c[i],i);
+ }
+ }
+ c[i]=a[i]+b[i];
+ printf("%d(x^%d)",a[deg],deg);
+}
+void main()
+{
+ int a[10],b[10],c[10];
+ int deg1,deg2;
+ int last1,last2;
+ Assign0(a);
+ Assign0(b);
+ printf("enter the degree of p1:");
+ scanf("%d",&deg1);
+ printf("enter the degree of p2:");
+ scanf("%d",&deg2);
+ ReadP(a,deg1);
+ ReadP(b,deg2);
+ PrintP(a,deg1);
+ PrintP(b,deg2);
+ if(deg1>=deg2)
+ {
+ AddP(a,b,c,deg1);
+ }
+ else if(deg2>deg1)
+ {
+ AddP(a,b,c,deg2);
+ }
+}
